@@ -8,11 +8,11 @@
 		<version>2.7.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.gm.user-service</groupId>
-	<artifactId>user-service</artifactId>
+	<groupId>com.gm.payload</groupId>
+	<artifactId>api-payload</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>user-service</name>
-	<description>user-microservice</description>
+	<name>api-payload</name>
+	<description>transaction-microservice</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -31,12 +31,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.jasypt</groupId>
-			<artifactId>jasypt</artifactId>
-			<version>1.9.3</version>
-		</dependency>
-
-		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
@@ -50,11 +44,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.tbs</groupId>
-			<artifactId>api-payload</artifactId>
-			<version>1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
