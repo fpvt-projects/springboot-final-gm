@@ -1,0 +1,346 @@
+{
+	"info": {
+		"_postman_id": "9814e973-3d74-453c-9f66-9075e9db2929",
+		"name": "GCash-Mini-Springboot",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17702568"
+	},
+	"item": [
+		{
+			"name": "User Registration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Francis\",\r\n    \"middleName\": \"\",\r\n    \"lastName\": \"Talan\",\r\n    \"email\": \"fpvt@testmail.com\",\r\n    \"password\": \"thejokesonU\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Authentication",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/user/authentication",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"user",
+						"authentication"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/user/all",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"user",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Balance",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"fpvt@testmail.com\",\r\n    \"balance\": 20000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8082/transaction/cashIn",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"transaction",
+						"cashIn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cash Out Balance",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"fpvt@testmail.com\",\r\n    \"amount\":500\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8082/transaction/cashOut",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"transaction",
+						"cashOut"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transfer Balance",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"receivingEmail\": \"fpvt@mail.com\",\r\n    \"senderEmail\": \"fpvt@testmail.com\",\r\n    \"balance\": 6000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8082/transaction/transfer",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"transaction",
+						"transfer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Activities",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8084/activity",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"activity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(ADMIN) Get All Logs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/admin/all-logs",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"all-logs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(ADMIN) Get All Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/admin/all-users",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"all-users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(API) User Registration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8089/user/registration",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"user",
+						"registration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(API) Use Authentication",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8089/user/authentication",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"user",
+						"authentication"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(API) Cash In Balance",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"fpvt@testmail.com\",\r\n    \"channel\": \"OTC\",\r\n    \"amount\": 20000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8089/transaction/cashIn",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"transaction",
+						"cashIn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(API) Cash Out Balance",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"fpvt@testmail.com\",\r\n    \"amount\":500\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8089/transaction/cashOut",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"transaction",
+						"cashOut"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(API) Cash Transfer",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"receivingEmail\": \"fpvt@mail.com\",\r\n    \"senderEmail\": \"fpvt@testmail.com\",\r\n    \"balance\": 6000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8089/transaction/transfer",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"transaction",
+						"transfer"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
