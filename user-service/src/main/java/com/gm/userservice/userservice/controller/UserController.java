@@ -1,14 +1,10 @@
 package com.gm.userservice.userservice.controller;
 
-import com.gm.payload.CashInRequest;
+import com.gm.payload.apipayload.*;
 import com.gm.userservice.userservice.exceptions.UserNotFoundException;
 import com.gm.userservice.userservice.exceptions.UserRegistrationException;
 import com.gm.userservice.userservice.model.User;
 import com.gm.userservice.userservice.repository.UserRepository;
-import com.gm.userservice.userservice.services.LoginRequest;
-import com.gm.userservice.userservice.services.UserRegistrationRequest;
-import com.gm.userservice.userservice.services.UserRegistrationResponse;
-import com.tbs.payload.LoginResponse;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -65,8 +61,8 @@ public class UserController {
         if(userRepository.existsByEmail(request.getEmail())) {
             User user = userRepository.findByEmail(request.getEmail());
             if(passwordEncryption.checkPassword(request.getPassword(), user.getPassword())) {
-                com.tbs.payload.LoginResponse loginResponse = new com.tbs.payload.LoginResponse();
-                loginResponse.setUserId(user.getId());
+                LoginResponse loginResponse = new LoginResponse();
+                loginResponse.setId(user.getId());
                 loginResponse.setLastLogin(LocalDateTime.now());
 
                 return loginResponse;
@@ -80,7 +76,7 @@ public class UserController {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 
         CashInRequest cashInRequest = new CashInRequest();
-        cashInRequest.setBalance(amount);
+        cashInRequest.setAmount(amount);
         cashInRequest.setEmail(email);
 
         HttpEntity<CashInRequest> entity = new HttpEntity<>(cashInRequest, headers);

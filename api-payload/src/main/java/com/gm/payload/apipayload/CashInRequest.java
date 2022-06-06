@@ -1,4 +1,4 @@
-package com.gm.transaction.transactionservice.service;
+package com.gm.payload.apipayload;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,7 @@ public class CashInRequest {
 
     private String email;
 
-    private double balance;
+    private double amount;
 
     private String channel;
 }

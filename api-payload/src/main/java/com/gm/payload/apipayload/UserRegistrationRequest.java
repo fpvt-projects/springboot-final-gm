@@ -1,15 +1,12 @@
 package com.gm.payload.apipayload;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class UserRegistrationRequest {
     @Email
     private String email;
@@ -23,5 +20,6 @@ public class UserRegistrationRequest {
     private String lastName;
 
     @NotBlank
+    @Size(min = 6)
     private String password;
 }

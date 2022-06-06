@@ -1,4 +1,4 @@
-package com.gm.transaction.transactionservice.service;
+package com.gm.payload.apipayload;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

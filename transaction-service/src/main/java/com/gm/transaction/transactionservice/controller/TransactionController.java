@@ -1,13 +1,11 @@
 package com.gm.transaction.transactionservice.controller;
 
+import com.gm.payload.apipayload.*;
 import com.gm.transaction.transactionservice.model.Transaction;
 import com.gm.transaction.transactionservice.repository.TransactionRepository;
-import com.gm.transaction.transactionservice.service.CashInRequest;
-import com.gm.transaction.transactionservice.service.CashInResponse;
-import com.gm.transaction.transactionservice.service.CashTransferRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import com.gm.payload.*;
+
 
 import javax.validation.Valid;
 
@@ -32,23 +30,42 @@ public class TransactionController {
         }
         Transaction transaction = new Transaction();
         transaction.setEmail(request.getEmail());
-        transaction.setBalance(request.getBalance());
+        transaction.setBalance(request.getAmount());
 
         transactionRepository.save(transaction);
     }
 
     @PutMapping("cashIn")
-    public CashInResponse CashIn(@RequestBody CashInRequest request){
-      if(transactionRepository.existsByEmail(request.getEmail())) {
-          Transaction result = transactionRepository.findByEmail(request.getEmail());
-          double newBalance = result.getBalance() + request.getBalance();
+    public CashInResponse CashIn(@RequestBody CashInRequest request) {
+        if (transactionRepository.existsByEmail(request.getEmail())) {
+            if (request.getChannel().equals("OTC") || request.getChannel().equals("TopUp")) {
+                Transaction result = transactionRepository.findByEmail(request.getEmail());
+                double newBalance = result.getBalance() + request.getAmount();
 
-          result.setBalance(newBalance);
-          Transaction updatedBalance = transactionRepository.save(result);
+                result.setBalance(newBalance);
+                transactionRepository.save(result);
 
-          return new CashInResponse(updatedBalance.getBalance());
+                return new CashInResponse(result.getEmail(),  request.getChannel(), result.getBalance());
+            }
+            return null;
         }
-      return null;
+        return null;
+    }
+
+    @PutMapping("cashOut")
+    public CashOutResponse cashOut(@RequestBody CashOutRequest request) {
+        if(transactionRepository.existsByEmail(request.getEmail())) {
+            Transaction chosenUser = transactionRepository.findByEmail(request.getEmail());
+                if(chosenUser.getBalance() >= request.getAmount()) {
+                    double newBalance = chosenUser.getBalance() - request.getAmount();
+                    chosenUser.setBalance(newBalance);
+
+                    transactionRepository.save(chosenUser);
+
+                    return new CashOutResponse(chosenUser.getEmail(), chosenUser.getBalance());
+                }
+            }
+        return null;
     }
 
     @PutMapping("transfer")
@@ -68,11 +85,7 @@ public class TransactionController {
 
                 Transaction doneTransfer = transactionRepository.save(senderResult);
                 Transaction doneMinus = transactionRepository.save(receivingResult);
-             }
+            }
         }
-    }
-
-    public void cashTransfer() {
-        //TODO - When user with appointed email transfers balance to another appointed email
     }
 }
