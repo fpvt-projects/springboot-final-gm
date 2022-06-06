@@ -1,10 +1,10 @@
-package com.gm.payload.gmpayload;
+package com.gm.api.service.apiservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class GmPayloadApplicationTests {
+class AppTests {
 
 	@Test
 	void contextLoads() {
