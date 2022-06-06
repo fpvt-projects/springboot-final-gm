@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 
@@ -53,6 +54,8 @@ public class UserController {
 
         User savedUser = userRepository.save(registerUser);
 
+        logAction("NEW_USER_REGISTRATION", registerUser.getEmail());
+
         return new UserRegistrationResponse(savedUser.getId());
     }
 
@@ -65,10 +68,23 @@ public class UserController {
                 loginResponse.setId(user.getId());
                 loginResponse.setLastLogin(LocalDateTime.now());
 
+                logAction("USER_AUTHENTICATION", request.getEmail());
+
                 return loginResponse;
             }
         }
         throw new UserNotFoundException("Email not found");
+    }
+
+    @GetMapping("all")
+    public GetAllUsersResponse getAllUsers() {
+        GetAllUsersResponse response = new GetAllUsersResponse();
+        response.setCurrentUsers(userRepository.count());
+        response.setUsers( new ArrayList<>());
+
+        userRepository.findAll().forEach(user -> response.getUsers().add(new UserDetails(user.getEmail(), user.getFirstName(), user.getLastName())));
+
+        return response;
     }
 
     public void startingBalance(double amount, String email) {
@@ -82,5 +98,18 @@ public class UserController {
         HttpEntity<CashInRequest> entity = new HttpEntity<>(cashInRequest, headers);
 
         restTemplate.exchange("http://localhost:8082/transaction", HttpMethod.POST, entity, CashInRequest.class).getBody();
+    }
+
+    public void logAction(String action, String email) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+
+        ActivityRequest logActivity = new ActivityRequest();
+        logActivity.setAction(action);
+        logActivity.setEmail(email);
+
+        HttpEntity<ActivityRequest> entity = new HttpEntity<>(logActivity, headers);
+
+        restTemplate.exchange("http://localhost:8084/activity", HttpMethod.POST, entity, ActivityRequest.class).getBody();
     }
 }

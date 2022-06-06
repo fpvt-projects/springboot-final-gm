@@ -3,11 +3,16 @@ package com.gm.transaction.transactionservice.controller;
 import com.gm.payload.apipayload.*;
 import com.gm.transaction.transactionservice.model.Transaction;
 import com.gm.transaction.transactionservice.repository.TransactionRepository;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 
 import javax.validation.Valid;
+import java.util.Arrays;
 
 
 @RestController
@@ -45,6 +50,8 @@ public class TransactionController {
                 result.setBalance(newBalance);
                 transactionRepository.save(result);
 
+                logAction("CASH-IN: "+request.getChannel(), request.getEmail());
+
                 return new CashInResponse(result.getEmail(),  request.getChannel(), result.getBalance());
             }
             return null;
@@ -62,6 +69,7 @@ public class TransactionController {
 
                     transactionRepository.save(chosenUser);
 
+                    logAction("CASH-OUT", request.getEmail());
                     return new CashOutResponse(chosenUser.getEmail(), chosenUser.getBalance());
                 }
             }
@@ -85,7 +93,22 @@ public class TransactionController {
 
                 Transaction doneTransfer = transactionRepository.save(senderResult);
                 Transaction doneMinus = transactionRepository.save(receivingResult);
+
+                logAction("CASH-Transfer: "+request.getReceivingEmail(), request.getSenderEmail());
             }
         }
+    }
+
+    public void logAction(String action, String email) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+
+        ActivityRequest logActivity = new ActivityRequest();
+        logActivity.setAction(action);
+        logActivity.setEmail(email);
+
+        HttpEntity<ActivityRequest> entity = new HttpEntity<>(logActivity, headers);
+
+        restTemplate.exchange("http://localhost:8084/activity", HttpMethod.POST, entity, ActivityRequest.class).getBody();
     }
 }
